@@ -1,16 +1,13 @@
 package com.example.movie_db.ui.adapters
 
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-
 
 @BindingAdapter("genreList")
 fun genreList(view: TextView, list: List<String>) {

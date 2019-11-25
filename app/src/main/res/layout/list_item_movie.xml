@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{movie.title}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_title_label"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_star"
                 app:layout_constraintStart_toEndOf="@id/tv_title_label"
                 app:layout_constraintTop_toTopOf="@id/tv_title_label"
                 tools:text="TITLE" />
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{movie.releaseDate}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_release_date_label"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tv_title"
                 app:layout_constraintStart_toEndOf="@id/tv_release_date_label"
                 app:layout_constraintTop_toTopOf="@id/tv_release_date_label"
                 tools:text="RELEASE DATE" />
@@ -97,10 +97,35 @@
                 android:layout_height="wrap_content"
                 app:genreList="@{movie.genres}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_genre_label"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tv_title"
                 app:layout_constraintStart_toEndOf="@id/tv_genre_label"
                 app:layout_constraintTop_toTopOf="@id/tv_genre_label"
                 tools:text="GENRES" />
+
+            <ImageView
+                android:id="@+id/iv_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"
+                app:layout_constraintStart_toEndOf="@id/tv_title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_popularity"
+                />
+
+            <TextView
+                android:id="@+id/tv_popularity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/spacing"
+                app:popularityText="@{movie.voteAverage}"
+                tools:text="9.4/10"
+                app:layout_constraintStart_toEndOf="@id/iv_star"
+                app:layout_constraintTop_toTopOf="@id/iv_star"
+                app:layout_constraintBottom_toBottomOf="@id/iv_star"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

@@ -16,3 +16,8 @@ fun loadImage(view: ImageView, url: String) {
         Glide.with(view.context).load(url).into(view)
     }
 }
+
+@BindingAdapter("popularityText")
+fun popularity(view: TextView, score: Double) {
+    view.text = "$score/10"
+}

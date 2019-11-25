@@ -1,6 +1,7 @@
 package com.example.movie_db.ui.adapters
 
 import android.graphics.drawable.Drawable
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +29,7 @@ fun popularity(view: TextView, score: Double) {
 }
 
 @BindingAdapter("setBackdropImage")
-fun setBackdropImage(view: ConstraintLayout, url: String) {
+fun setBackdropImage(view: FrameLayout, url: String) {
     // TODO check to see if null check is necessary (i think generated code has null check)
     if (url != null && url.length > 0) {
         Glide.with(view.context)

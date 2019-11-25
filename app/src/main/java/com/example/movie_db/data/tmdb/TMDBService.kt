@@ -2,6 +2,7 @@ package com.example.movie_db.data.tmdb
 
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -19,6 +20,9 @@ interface TMDBService {
 
     @GET("configuration")
     suspend fun getConfiguration(@Query("api_key") apiKey: String): Response<Configuration>
+
+    @GET("movie/{movieId}")
+    suspend fun getMovie(@Path("movieId") movieId: Int, @Query("api_key") apiKey: String): Response<Movie>
 
     companion object {
         const val ENDPOINT = "https://api.themoviedb.org/3/"

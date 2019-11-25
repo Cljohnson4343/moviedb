@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.movie_db.databinding.FragmentMovieDetailBinding
@@ -14,6 +15,8 @@ import com.example.movie_db.ui.viewmodels.MovieDetailViewModelFactory
 
 class MovieDetailFragment : Fragment() {
     private val args: MovieDetailFragmentArgs by navArgs()
+
+    private val TAG = "movieDetailFragment"
 
     private val viewModel: MovieDetailViewModel by lazy {
         ViewModelProvider(
@@ -30,9 +33,13 @@ class MovieDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
+        val binding = FragmentMovieDetailBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = this@MovieDetailFragment.viewModel
+            executePendingBindings()
+        }
 
         return binding.root
     }
+
 }

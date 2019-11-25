@@ -1,5 +1,6 @@
 package com.example.movie_db.data.tmdb
 
+import android.os.Build
 import com.example.movie_db.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -31,6 +32,11 @@ object TMDBClient {
         errorMessage = "Error loading genres"
     )
 
+    suspend fun movie(movieId: Int): Result<Movie> = apiCall(
+        call = { loadMovie(movieId) },
+        errorMessage = "Error loading movie"
+    )
+
     suspend fun popularMovies(page: Int = 1): Result<PopularMovies> = apiCall(
         call = { loadPopularMovies(page) },
         errorMessage = "Error loading movies"
@@ -45,6 +51,22 @@ object TMDBClient {
             }
         }
         return Result.Error(response.ioException("Error loading configuration"))
+    }
+
+    private suspend fun loadMovie(movieId: Int): Result<Movie> {
+        val response = service.getMovie(
+            apiKey = BuildConfig.MOVIE_DB_KEY,
+            movieId = movieId
+        )
+        if (response.isSuccessful) {
+            val body = response.body()
+            if (body != null) {
+                return Result.Success(body)
+            }
+        }
+        return Result.Error(
+            response.ioException("Error loading movie")
+        )
     }
 
     private suspend fun loadPopularMovies(page: Int = 1): Result<PopularMovies> {

@@ -6,14 +6,31 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.movie_db.ui.viewmodels.MovieDetailViewModel"/>
+            type="com.example.movie_db.ui.viewmodels.MovieDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/double_spacing"
-        app:setBackdropImage="@{viewModel.backdropUrl}"
-        >
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:setBackdropImage="@{viewModel.backdropUrl}">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/double_spacing"
+            android:background="@color/background"
+            >
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:textColor="@color/snow_white"
+                android:text="@{viewModel.movie.title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

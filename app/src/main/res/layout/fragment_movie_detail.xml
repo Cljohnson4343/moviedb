@@ -5,15 +5,15 @@
 
     <data>
         <variable
-            name="movie"
-            type="com.example.movie_db.data.tmdb.PopularMovieBrief" />
+            name="viewModel"
+            type="com.example.movie_db.ui.viewmodels.MovieDetailViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/double_spacing"
-        app:setBackdropImage="@{movie.backdropUrl}"
+        app:setBackdropImage="@{viewModel.backdropUrl}"
         >
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -29,8 +29,8 @@ class MoviesAdapter : ListAdapter<PopularMovieBrief, MoviesAdapter.MoviesViewHol
                 this.movieCard.setOnClickListener {
                     val directions =
                         MoviesFragmentDirections.actionMoviesFragmentToMovieDetailFragment(
-                            backdropUrl = movie.backdropUrl,
-                            movieId = movie.id
+                            movieId = movie.id,
+                            backdropUrl = movie.backdropUrl
                         )
                     it.findNavController().navigate(directions)
                 }

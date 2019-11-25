@@ -22,17 +22,15 @@ class MovieListViewModel : ViewModel() {
 
     private val posterSize = "original"
 
-    private val tmdbClient = TMDBClient()
-
     init {
         //
         // TODO clean this block up.
         //
 
         viewModelScope.launch { // Bound to Dispatcher.Main
-            val configDeferred = async { tmdbClient.configuration() }
-            val genreDeferred = async { tmdbClient.genres() }
-            val moviesResult = async { tmdbClient.popularMovies() }.await()
+            val configDeferred = async { TMDBClient.configuration() }
+            val genreDeferred = async { TMDBClient.genres() }
+            val moviesResult = async { TMDBClient.popularMovies() }.await()
 
             when (moviesResult) {
                 is Result.Success -> {

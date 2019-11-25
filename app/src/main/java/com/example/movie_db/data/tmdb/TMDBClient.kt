@@ -11,7 +11,7 @@ import java.io.IOException
 /**
  * Data source class for the TMDB API
  */
-class TMDBClient() {
+object TMDBClient {
     // TODO inject this dependency
     private val service: TMDBService by lazy {
         Retrofit.Builder()

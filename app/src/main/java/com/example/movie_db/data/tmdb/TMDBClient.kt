@@ -40,4 +40,22 @@ class TMDBClient() {
             IOException("Error loading popular movies ${response.code()} ${response.message()}")
         )
     }
+
+    suspend fun genres(): Result<List<Genre>> = apiCall(
+        call = { loadGenres() },
+        errorMessage = "Error loading genres"
+    )
+
+    private suspend fun loadGenres(): Result<List<Genre>> {
+        val response = service.getGenres(BuildConfig.MOVIE_DB_KEY)
+        if (response.isSuccessful){
+            val body = response.body()
+            if (body != null) {
+                return Result.Success(body.genres)
+            }
+        }
+        return Result.Error(
+            IOException("Error loading genres ${response.code()} ${response.message()}")
+        )
+    }
 }

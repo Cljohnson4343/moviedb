@@ -37,6 +37,7 @@ public class PopularMovieBrief {
     @SerializedName("genre_ids")
     @Expose
     private List<Integer> genreIds = null;
+    private List<String> genres = null;
     @SerializedName("title")
     @Expose
     private String title;
@@ -204,4 +205,11 @@ public class PopularMovieBrief {
         this.releaseDate = releaseDate;
     }
 
+    public List<String> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
 }

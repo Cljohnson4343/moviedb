@@ -29,6 +29,7 @@ public class PopularMovieBrief {
     @SerializedName("backdrop_path")
     @Expose
     private String backdropPath;
+    private String backdropUrl;
     @SerializedName("original_language")
     @Expose
     private String originalLanguage;
@@ -220,5 +221,13 @@ public class PopularMovieBrief {
 
     public void setPosterUrl(String posterUrl) {
         this.posterUrl = posterUrl;
+    }
+
+    public String getBackdropUrl() {
+        return backdropUrl;
+    }
+
+    public void setBackdropUrl(String backdropUrl) {
+        this.backdropUrl = backdropUrl;
     }
 }

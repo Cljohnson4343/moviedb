@@ -60,7 +60,7 @@ class MovieListViewModel : ViewModel() {
             val configResult = configDeferred.await()
             when (configResult) {
                 is Result.Success -> {
-                    addPosterUrls(configResult.data.images.secureBaseUrl)
+                    addUrls(configResult.data.images.secureBaseUrl)
                 }
                 is Result.Error -> {
                     Log.e(TAG, "Error: ${configResult.exception}")
@@ -81,9 +81,10 @@ class MovieListViewModel : ViewModel() {
         }
     }
 
-    private fun addPosterUrls(base: String) {
+    private fun addUrls(base: String) {
         _movies.value = _movies.value?.map{
             it.posterUrl = "$base${this.posterSize}${it.posterPath}"
+            it.backdropUrl = "${base}original${it.backdropPath}"
             it
         }
     }

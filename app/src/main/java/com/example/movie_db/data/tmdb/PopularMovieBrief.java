@@ -19,6 +19,7 @@ public class PopularMovieBrief {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
+    private String posterUrl;
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -211,5 +212,13 @@ public class PopularMovieBrief {
 
     public void setGenres(List<String> genres) {
         this.genres = genres;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 }

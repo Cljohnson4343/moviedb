@@ -24,6 +24,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                app:loadImage="@{movie.posterUrl}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_title_label"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
             <TextView
                 android:id="@+id/tv_title_label"
                 android:layout_width="wrap_content"
@@ -32,7 +42,7 @@
                 android:text="@string/title"
                 app:layout_constraintBottom_toTopOf="@id/tv_release_date_label"
                 app:layout_constraintEnd_toStartOf="@id/tv_title"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_poster"
                 app:layout_constraintTop_toTopOf="parent"
 
                 />

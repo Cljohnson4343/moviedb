@@ -20,11 +20,18 @@ class MovieListViewModel : ViewModel() {
 
     private val genreMap: HashMap<Int, String> = HashMap()
 
+    private val posterSize = "original"
+
     private val tmdbClient = TMDBClient()
 
     init {
+        //
+        // TODO clean this block up.
+        //
+
         viewModelScope.launch { // Bound to Dispatcher.Main
-            val genreDeffered = async { tmdbClient.genres() }
+            val configDeferred = async { tmdbClient.configuration() }
+            val genreDeferred = async { tmdbClient.genres() }
             val moviesResult = async { tmdbClient.popularMovies() }.await()
 
             when (moviesResult) {
@@ -37,7 +44,7 @@ class MovieListViewModel : ViewModel() {
                 }
             }
 
-            val genreResult = genreDeffered.await()
+            val genreResult = genreDeferred.await()
             when (genreResult) {
                 is Result.Success -> {
                     genreResult.data.forEach {
@@ -47,6 +54,16 @@ class MovieListViewModel : ViewModel() {
                 }
                 is Result.Error -> {
                     Log.e(TAG, "Error: ${genreResult.exception}")
+                }
+            }
+
+            val configResult = configDeferred.await()
+            when (configResult) {
+                is Result.Success -> {
+                    addPosterUrls(configResult.data.images.secureBaseUrl)
+                }
+                is Result.Error -> {
+                    Log.e(TAG, "Error: ${configResult.exception}")
                 }
             }
         }
@@ -61,6 +78,13 @@ class MovieListViewModel : ViewModel() {
     private fun getGenres(list: List<Int>): List<String> {
         return list.map {
             genreMap.get(it) ?: ""
+        }
+    }
+
+    private fun addPosterUrls(base: String) {
+        _movies.value = _movies.value?.map{
+            it.posterUrl = "$base${this.posterSize}${it.posterPath}"
+            it
         }
     }
 }

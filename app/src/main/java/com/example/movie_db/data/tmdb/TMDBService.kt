@@ -17,6 +17,9 @@ interface TMDBService {
     @GET("genre/movie/list")
     suspend fun getGenres(@Query("api_key") apiKey: String): Response<GenreResponse>
 
+    @GET("configuration")
+    suspend fun getConfiguration(@Query("api_key") apiKey: String): Response<Configuration>
+
     companion object {
         const val ENDPOINT = "https://api.themoviedb.org/3/"
     }

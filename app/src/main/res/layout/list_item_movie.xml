@@ -26,80 +26,25 @@
 
             <ImageView
                 android:id="@+id/iv_poster"
-                android:layout_width="100dp"
-                android:layout_height="150dp"
+                android:layout_width="66dp"
+                android:layout_height="100dp"
                 app:loadImage="@{movie.posterUrl}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_title_label"
+                app:layout_constraintEnd_toStartOf="@id/tv_title"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
-                android:id="@+id/tv_title_label"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/spacing"
-                android:text="@string/title"
-                app:layout_constraintBottom_toTopOf="@id/tv_release_date_label"
-                app:layout_constraintEnd_toStartOf="@id/tv_title"
+                android:layout_marginLeft="@dimen/spacing"
+                android:text="@{movie.title}"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_release_date"
                 app:layout_constraintStart_toEndOf="@id/iv_poster"
                 app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{movie.title}"
-                app:layout_constraintBottom_toBottomOf="@id/tv_title_label"
-                app:layout_constraintEnd_toStartOf="@id/iv_star"
-                app:layout_constraintStart_toEndOf="@id/tv_title_label"
-                app:layout_constraintTop_toTopOf="@id/tv_title_label"
                 tools:text="TITLE" />
-
-            <TextView
-                android:id="@+id/tv_release_date_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/spacing"
-                android:text="@string/release_date"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_release_date"
-                app:layout_constraintStart_toStartOf="@id/tv_title_label"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_label" />
-
-            <TextView
-                android:id="@+id/tv_release_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{movie.releaseDate}"
-                app:layout_constraintBottom_toBottomOf="@id/tv_release_date_label"
-                app:layout_constraintEnd_toEndOf="@id/tv_title"
-                app:layout_constraintStart_toEndOf="@id/tv_release_date_label"
-                app:layout_constraintTop_toTopOf="@id/tv_release_date_label"
-                tools:text="RELEASE DATE" />
-
-            <TextView
-                android:id="@+id/tv_genre_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/spacing"
-                android:text="@string/genre"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_genres"
-                app:layout_constraintStart_toStartOf="@id/tv_title_label"
-                app:layout_constraintTop_toBottomOf="@id/tv_release_date_label" />
-
-            <TextView
-                android:id="@+id/tv_genres"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:genreList="@{movie.genres}"
-                app:layout_constraintBottom_toBottomOf="@id/tv_genre_label"
-                app:layout_constraintEnd_toEndOf="@id/tv_title"
-                app:layout_constraintStart_toEndOf="@id/tv_genre_label"
-                app:layout_constraintTop_toTopOf="@id/tv_genre_label"
-                tools:text="GENRES" />
 
             <ImageView
                 android:id="@+id/iv_star"
@@ -107,9 +52,9 @@
                 android:layout_height="wrap_content"
                 android:tint="@color/star"
                 android:src="@drawable/ic_star"
-                app:layout_constraintStart_toEndOf="@id/tv_title"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_release_date"
+                app:layout_constraintTop_toTopOf="@id/tv_release_date"
+                app:layout_constraintBottom_toBottomOf="@id/tv_release_date"
                 app:layout_constraintEnd_toStartOf="@id/tv_popularity"
                 />
 
@@ -126,6 +71,27 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
+            <TextView
+                android:id="@+id/tv_release_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{movie.releaseDate}"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintBottom_toTopOf="@id/tv_genres"
+                app:layout_constraintEnd_toStartOf="@id/iv_star"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                tools:text="RELEASE DATE" />
+
+            <TextView
+                android:id="@+id/tv_genres"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:genreList="@{movie.genres}"
+                app:layout_constraintTop_toBottomOf="@id/tv_release_date"
+                app:layout_constraintBottom_toBottomOf="@id/iv_poster"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                tools:text="GENRES" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

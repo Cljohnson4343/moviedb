@@ -3,6 +3,7 @@ package com.example.movie_db.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.example.movie_db.data.tmdb.PopularMovieBrief
 import com.example.movie_db.databinding.ListItemMovieBinding
 import com.example.movie_db.ui.MoviesFragmentDirections
 
-class MoviesAdapter : ListAdapter<PopularMovieBrief, MoviesAdapter.MoviesViewHolder>(MovieDiff()) {
+class MoviesAdapter : PagedListAdapter<PopularMovieBrief, MoviesAdapter.MoviesViewHolder>(MovieDiff()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val binding =
             ListItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,7 +20,9 @@ class MoviesAdapter : ListAdapter<PopularMovieBrief, MoviesAdapter.MoviesViewHol
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val movie = getItem(position)
-        holder.bind(movie)
+        if (movie != null) {
+            holder.bind(movie)
+        }
     }
 
     class MoviesViewHolder(private val binding: ListItemMovieBinding) :
@@ -36,7 +39,7 @@ class MoviesAdapter : ListAdapter<PopularMovieBrief, MoviesAdapter.MoviesViewHol
                     it.findNavController().navigate(directions)
                 }
                 this.movie = movie
-                executePendingBindings() // TODO look into if this is still necessary
+                executePendingBindings()
             }
         }
     }

@@ -5,8 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.example.movie_db.data.Result
 import com.example.movie_db.data.tmdb.PopularMovieBrief
+import com.example.movie_db.data.tmdb.PopularMoviesDataSourceFactory
 import com.example.movie_db.data.tmdb.TMDBClient
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -14,9 +17,17 @@ import kotlinx.coroutines.launch
 class MovieListViewModel : ViewModel() {
     private val TAG = "movieListViewModel"
 
-    private val _movies: MutableLiveData<List<PopularMovieBrief>> = MutableLiveData()
-    val movies: LiveData<List<PopularMovieBrief>>
-        get() = _movies
+    var movies: LiveData<PagedList<PopularMovieBrief>>
+
+    init {
+        movies = LivePagedListBuilder<Int, PopularMovieBrief>(
+            PopularMoviesDataSourceFactory(),
+            PagedList.Config.Builder()
+                .setPageSize(20)
+                .setEnablePlaceholders(false)
+                .build()
+        ).build()
+    }
 
     private val genreMap: HashMap<Int, String> = HashMap()
 
@@ -26,21 +37,11 @@ class MovieListViewModel : ViewModel() {
         //
         // TODO clean this block up.
         //
-
-        viewModelScope.launch { // Bound to Dispatcher.Main
+/*
+        viewModelScope.launch {
+            // Bound to Dispatcher.Main
             val configDeferred = async { TMDBClient.configuration() }
             val genreDeferred = async { TMDBClient.genres() }
-            val moviesResult = async { TMDBClient.popularMovies() }.await()
-
-            when (moviesResult) {
-                is Result.Success -> {
-                    // On Main thread so no need to use postValue
-                    _movies.value = moviesResult.data.results
-                }
-                is Result.Error -> {
-                    Log.e(TAG, "Error: ${moviesResult.exception}")
-                }
-            }
 
             val genreResult = genreDeferred.await()
             when (genreResult) {
@@ -65,14 +66,17 @@ class MovieListViewModel : ViewModel() {
                 }
             }
         }
+        */
     }
 
+    /*
     private fun addGenres() {
         _movies.value = _movies.value?.map {
             it.genres = getGenres(it.genreIds)
             it
         }
     }
+
     private fun getGenres(list: List<Int>): List<String> {
         return list.map {
             genreMap.get(it) ?: ""
@@ -80,10 +84,12 @@ class MovieListViewModel : ViewModel() {
     }
 
     private fun addUrls(base: String) {
-        _movies.value = _movies.value?.map{
+        _movies.value = _movies.value?.map {
             it.posterUrl = "$base${this.posterSize}${it.posterPath}"
             it.backdropUrl = "${base}original${it.backdropPath}"
             it
         }
     }
+
+     */
 }

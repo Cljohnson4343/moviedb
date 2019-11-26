@@ -11,8 +11,10 @@ import com.bumptech.glide.request.transition.Transition
 import com.example.movie_db.data.tmdb.Genre
 
 @BindingAdapter("genreList")
-fun genreList(view: TextView, list: List<String>) {
-    view.text = list.joinToString(separator = ", ")
+fun genreList(view: TextView, list: List<String>?) {
+    if (list != null) {
+        view.text = list.joinToString(separator = ", ")
+    }
 }
 
 @BindingAdapter("loadImage")
@@ -28,7 +30,7 @@ fun popularity(view: TextView, score: Double) {
 }
 
 @BindingAdapter("setBackdropImage")
-fun setBackdropImage(view: FrameLayout, url: String) {
+fun setBackdropImage(view: FrameLayout, url: String?) {
     // TODO check to see if null check is necessary (i think generated code has null check)
     if (url != null && url.length > 0) {
         Glide.with(view.context)

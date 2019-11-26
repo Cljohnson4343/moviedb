@@ -19,6 +19,8 @@ class MoviesFragment : Fragment() {
         ).get(MovieListViewModel::class.java)
     }
 
+    private val adapter = MoviesAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,11 +28,8 @@ class MoviesFragment : Fragment() {
     ): View? {
         val binding = FragmentMoviesBinding.inflate(inflater, container, false)
 
-        val adapter = MoviesAdapter()
         binding.rvMoviesList.adapter = adapter
-        viewModel.movies.observe(this, Observer {
-            adapter.submitList(it)
-        })
+        viewModel.movies.observe(this, Observer { adapter.submitList(it) })
 
         return binding.root
     }

@@ -10,7 +10,11 @@ import com.example.movie_db.data.tmdb.Movie
 import com.example.movie_db.data.tmdb.TMDBClient
 import kotlinx.coroutines.launch
 
-class MovieDetailViewModel(private val movieId: Int, val backdropUrl: String) : ViewModel() {
+class MovieDetailViewModel(
+    private val movieId: Int,
+    val backdropUrl: String,
+    val posterUrl: String
+) : ViewModel() {
 
     private val TAG = "movieDetailViewModel"
 
@@ -24,7 +28,10 @@ class MovieDetailViewModel(private val movieId: Int, val backdropUrl: String) : 
             when (result) {
                 is Result.Success -> {
                     _movie.value = result.data
-                    Log.d(TAG, "Result ${result.data.title}")
+                    Log.d(
+                        TAG,
+                        "Title: ${result.data.title}\nRelease: ${result.data.releaseDate}\nRuntime: ${result.data.runtime}"
+                    )
                 }
                 is Result.Error -> {
                     Log.d(TAG, "Error ${result.exception}")

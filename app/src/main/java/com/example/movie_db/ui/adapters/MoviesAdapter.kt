@@ -19,7 +19,7 @@ class MoviesAdapter : ListAdapter<PopularMovieBrief, MoviesAdapter.MoviesViewHol
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val movie = getItem(position)
-        (holder as MoviesViewHolder).bind(movie)
+        holder.bind(movie)
     }
 
     class MoviesViewHolder(private val binding: ListItemMovieBinding) :
@@ -30,7 +30,8 @@ class MoviesAdapter : ListAdapter<PopularMovieBrief, MoviesAdapter.MoviesViewHol
                     val directions =
                         MoviesFragmentDirections.actionMoviesFragmentToMovieDetailFragment(
                             movieId = movie.id,
-                            backdropUrl = movie.backdropUrl
+                            backdropUrl = movie.backdropUrl,
+                            posterUrl = movie.posterUrl
                         )
                     it.findNavController().navigate(directions)
                 }

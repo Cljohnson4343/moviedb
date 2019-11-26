@@ -27,6 +27,9 @@
         <argument
             android:name="backdropUrl"
             app:argType="string" />
+        <argument
+            android:name="posterUrl"
+            app:argType="string" />
     </fragment>
 
 </navigation>

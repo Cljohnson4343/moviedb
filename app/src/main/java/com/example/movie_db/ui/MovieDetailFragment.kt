@@ -1,12 +1,10 @@
 package com.example.movie_db.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.movie_db.databinding.FragmentMovieDetailBinding
@@ -23,7 +21,8 @@ class MovieDetailFragment : Fragment() {
             this,
             MovieDetailViewModelFactory(
                 movieId = args.movieId,
-                backdropUrl = args.backdropUrl
+                backdropUrl = args.backdropUrl,
+                posterUrl = args.posterUrl
             )
         ).get(MovieDetailViewModel::class.java)
     }

@@ -21,7 +21,7 @@ class MovieListViewModel : ViewModel() {
 
     init {
         movies = LivePagedListBuilder<Int, PopularMovieBrief>(
-            PopularMoviesDataSourceFactory(),
+            PopularMoviesDataSourceFactory(viewModelScope),
             PagedList.Config.Builder()
                 .setPageSize(20)
                 .setEnablePlaceholders(false)

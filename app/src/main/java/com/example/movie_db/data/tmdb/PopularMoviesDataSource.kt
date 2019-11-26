@@ -3,11 +3,13 @@ package com.example.movie_db.data.tmdb
 import android.util.Log
 import androidx.paging.PositionalDataSource
 import com.example.movie_db.data.Result
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class PopularMoviesDataSource : PositionalDataSource<PopularMovieBrief>() {
+class PopularMoviesDataSource(private val scope: CoroutineScope) :
+    PositionalDataSource<PopularMovieBrief>() {
     private val TAG = "popularMoviesDataSource"
 
     override fun loadRange(
@@ -21,13 +23,18 @@ class PopularMoviesDataSource : PositionalDataSource<PopularMovieBrief>() {
 
         // TODO refactor to remove duplication
         // TODO enable coroutinescope injection to allow accurate coroutine cancellation
-        GlobalScope.launch {
-            val moviesResult = async { TMDBClient.popularMovies(params.startPosition) }.await()
+        scope.launch {
+            val page = (params.startPosition / params.loadSize) + 1
+            Log.d(TAG, "Requesting page $page")
+            val result = async { TMDBClient.popularMovies(page) }.await()
 
-            when (moviesResult) {
+            when (result) {
                 is Result.Success -> {
-                    Log.d(TAG, "Result: ${moviesResult.data}")
-                    callback.onResult(moviesResult.data.results.map { movieBrief ->
+                    Log.d(
+                        TAG,
+                        "Result: (page = ${result.data.page},totalPages = ${result.data.totalPages}, totalResults = ${result.data.totalResults}"
+                    )
+                    callback.onResult(result.data.results.map { movieBrief ->
                         movieBrief?.let {
                             // TODO Refactor to get rid of hard-coded urls
                             it.posterUrl = "https://image.tmdb.org/t/p/original/${it.posterPath}"
@@ -38,7 +45,7 @@ class PopularMoviesDataSource : PositionalDataSource<PopularMovieBrief>() {
                     })
                 }
                 is Result.Error -> {
-                    Log.e(TAG, "Error: ${moviesResult.exception}")
+                    Log.e(TAG, "Error: ${result.exception}")
                 }
             }
         }
@@ -50,16 +57,19 @@ class PopularMoviesDataSource : PositionalDataSource<PopularMovieBrief>() {
     ) {
         Log.d(
             TAG,
-            "loadRange: (params.pageSize = ${params.pageSize}, params.requestedLoadSize = ${params.requestedLoadSize}"
+            "loadInitial: (params.pageSize = ${params.pageSize}, params.requestedLoadSize = ${params.requestedLoadSize}"
         )
-        GlobalScope.launch {
+        scope.launch {
             val result = async { TMDBClient.popularMovies() }.await()
 
             when (result) {
                 is Result.Success -> {
-                    Log.d(TAG, "Result: ${result.data}")
+                    Log.d(
+                        TAG,
+                        "Result: (page = ${result.data.page},totalPages = ${result.data.totalPages}, totalResults = ${result.data.totalResults}"
+                    )
                     callback.onResult(
-                        result.data.results.map{ movieBrief ->
+                        result.data.results.map { movieBrief ->
                             movieBrief?.let {
                                 // TODO Refactor to get rid of hard-coded urls
                                 it.posterUrl =
@@ -69,8 +79,8 @@ class PopularMoviesDataSource : PositionalDataSource<PopularMovieBrief>() {
                                 it
                             }
                         },
-                        result.data.page,
-                        result.data.totalPages
+                        0,
+                        result.data.totalPages * result.data.results.size
                     )
                 }
                 is Result.Error -> {

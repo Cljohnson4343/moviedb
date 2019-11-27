@@ -1,9 +1,14 @@
 package com.example.movie_db.ui.adapters
 
 import android.graphics.drawable.Drawable
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.text.util.LinkifyCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -31,7 +36,6 @@ fun popularity(view: TextView, score: Double) {
 
 @BindingAdapter("setBackdropImage")
 fun setBackdropImage(view: FrameLayout, url: String?) {
-    // TODO check to see if null check is necessary (i think generated code has null check)
     if (url != null && url.length > 0) {
         Glide.with(view.context)
             .load(url)
@@ -73,3 +77,14 @@ fun setGenres(view: TextView, list: List<Genre>?) {
     }
 }
 
+@BindingAdapter("title", "homepage")
+fun setClickableTitle(view: TextView, title: String?, homepage: String?) {
+    if (homepage != null) {
+        val url = "<a href=\"${homepage}\">${title}</a>"
+        view.text = Html.fromHtml(url)
+        view.movementMethod = LinkMovementMethod.getInstance()
+        view.autoLinkMask = Linkify.WEB_URLS
+    } else {
+        view.text = title ?: ""
+    }
+}
